@@ -298,13 +298,13 @@
       <div class="sections">
         <p id="basics">
         <h2 class="section-heading"> Basics </h2>
-        	The numbers stored in hardware are in the form of bits. One must have heard of the terms 32-bit architecture and 64-bit architecture.
-				 The precise meaning is that the numbers in a 32-bit architecture can be represented using 32 bits and similarly, for 64-bit architecture, the numbers can be represented using 64 bits.
-				 If we convert these stored bits in hardware to real-decimal value using base-2 expansion, we will get only positive integer values. In real-world applications, we need to deal with fractional numbers (both positive and negative)
+        	The numbers stored in hardware are in the form of bits. One must have heard of the terms \( 32 \) bit architecture and \( 64 \) bit architecture.
+				 The precise meaning is that the numbers in a \( 32 \) bit architecture can be represented using \( 32 \) bits and similarly, for \( 64 \) bit architecture, the numbers can be represented using \( 64 \) bits.
+				 If we convert these stored bits in hardware to real-decimal value using base-\( 2 \) expansion, we will get only positive integer values. In real-world applications, we need to deal with fractional numbers (both positive and negative)
 				 also, so we try to map these stored bits in hardware to fractional numbers by using either a fixed-point representation or floating-point representation. Here I discuss only about the fixed-point representation.
 				 <br>
 				 <br>
-				 In fixed-point representation, the stored bit-representation in hardware is divided into 3 parts: a sign bit, integer bits, and precision bits. We use a terminology called <em> fixed-point format </em>
+				 In fixed-point representation, the stored bit-representation in hardware is divided into \( 3 \) parts: a sign bit, integer bits, and precision bits. We use a terminology called <em> fixed-point format </em>
 				 to represent this division of bits. This division into integer part, and fractional part implies a binary point in the bit-representation, the bits after this binary point will have fractional weights
 				 associated with them so that these bits represent the fractional part. As there is no such division or binary point under the hardware, the same set of bits in hardware can be interpreted using different
 				 fixed-point formats to give distinct real-values. Let's have a look at this more formally!!
@@ -317,7 +317,7 @@
           </li>
           <br>
 
-          <li>Suppose the bit-representation of an 8-bit number is:
+          <li>Suppose the bit-representation of an \( 8 \) bit number is:
           $$ B_{7}B_{6}B_{5}B_{4}B_{3}B_{2}B_{1}B_{0};\ \text{where} \ B_{i} \in \{0,1\}, \ \forall \ i \in \{0,1,\cdots,7\} $$
           <!--<math>
           B<sub>7</sub>B<sub>6</sub>B<sub>5</sub>B<sub>4</sub>B<sub>3</sub>
@@ -370,7 +370,7 @@
 
 					<li>
 
-					This can be viewed as a mapping/transformation (not linear, because linear transformation is defined for two vector spaces over the same field) from the \( (m+n+1) \) dimensional vector space over the binary field \( \mathbb{F}_{2} = \{0,1\} \) to 1 dimensional vector space over the field \( \mathbb{R} \).
+					This can be viewed as a mapping/transformation (not linear, because linear transformation is defined for two vector spaces over the same field) from the \( (m+n+1) \) dimensional vector space over the binary field \( \mathbb{F}_{2} = \{0,1\} \) to \( 1 \) dimensional vector space over the field \( \mathbb{R} \).
 					$$
 					\text{T}_{<1,m,n>} \ : \ \mathbb{F}_{2}^{m+n+1} \ \rightarrow \ \mathbb{R} \\
 					$$
@@ -425,7 +425,7 @@
 
           <li> Let's look at a few examples to demonstrate the above concepts clearly. <br>
           <ul class="list-square">
-          	<li>Let the fixed-point format for interpreting/mapping a 2-bit number be \( <1,0,1> \) <br>
+          	<li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be \( <1,0,1> \) <br>
             - Maximum value (= <strong> 01 </strong>) that can be represented is: <br>
             <center>
             $$ 0*(-2^0) + 1*2^{-1} = +0.5 $$
@@ -445,7 +445,7 @@
             </math> -->
 
             </li>
-            <li>Let the fixed-point format for interpreting/mapping a 2-bit number be  \( <1, -1 ,2> \) <br>
+            <li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be  \( <1, -1 ,2> \) <br>
             - Maximum value (= <strong> 01 </strong>) that can be represented is: <br>
             <center>
             $$ 0*(-2^{-1}) + 1*2^{-2} = +0.25 $$
@@ -466,7 +466,7 @@
             </math> -->
 
             </li>
-            <li>Let the fixed-point format for interpreting/mapping a 2-bit number be \( <1, -2 ,3> \) <br>
+            <li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be \( <1, -2 ,3> \) <br>
             - Maximum value (= <strong> 01 </strong>) that can be represented is: <br>
             <center>
             $$ 0*(-2^{-2}) + 1*2^{-3} = +0.125 $$
@@ -489,10 +489,10 @@
             </li>
           </ul> <!-- list-square -->
           </li>
-          <li>Few points to note from the above 3 examples:<br>
+          <li>Few points to note from the above \( 3 \) examples:<br>
           <ul class="list-square">
           	<li>It's perfectly okay for the number of integer bits or precision bits to be negative, as long as the total number of bits or wordLength is positive. The numbers in the fix-point format just decide the weight multiplying each bit in the 2's complement representation</li>
-            <li>From the above 3 examples, it's clear that even though the maximum and minimum values stored in the hardware are the same, i.e. 1 and 2 respectively, the mapped values based on the fixed-point format are quite different, which just depends on the weights assigned to the bits.</li>
+            <li>From the above \( 3 \) examples, it's clear that even though the maximum and minimum values stored in the hardware are the same, i.e. \( 1 \) and \( 2 \) respectively, the mapped values based on the fixed-point format are quite different, which just depends on the weights assigned to the bits.</li>
           </ul> <!-- list-square -->
           </li>
         </ul> <!-- list-circle -->
@@ -501,7 +501,7 @@
         	<li><strong class="section-heading">When there is no sign bit:</strong> To get the actual value from the value stored in hardware; all we have to do is to multiply the value stored in hardware by the lowest possible weight in fixed-point format:<br>
           - For format \( <0,0,1> \), lowest possible weight is  \( 2^{-1} \)  ; for format \( <0,-1,2> \), lowest possible weight is \( 2^{-2} \) ; for format \( <0,-2,3> \), lowest possible weight is  \( 2^{-3} \) </li>
 
-          <li><strong class="section-heading">When there is a sign bit:</strong> Assume a 5-bit number with bit-representation:
+          <li><strong class="section-heading">When there is a sign bit:</strong> Assume a \( 5 \) bit number with bit-representation:
           $$ B_{4}B_{3}B_{2}B_{1}B_{0};\ \text{where} \ B_{i} \in \{0,1\}, \ \forall \ i \in \{0,1,\cdots,4\} $$
           <!--<math> B<sub>4</sub>B<sub>3</sub>B<sub>2</sub>B<sub>1</sub>B<sub>0</sub>
           </math>-->
