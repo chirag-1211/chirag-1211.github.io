@@ -392,13 +392,13 @@
 					</li>
 
 					<li>
-					The weight associated with the signBit in the 2's complement representation is negative, and the absolute value of this weight is more than sum of absolute values of the weights associated with all other bits.
-					Consider the fixed-point format \(&lt; 1,m,n &gt;\), the weight of the signBit is \(-2^{m}\), the sum of weights associated with all other bits is given by:
+					The weight associated with the sign bit in the 2's complement representation is negative, and the absolute value of this weight is more than sum of absolute values of the weights associated with all other bits.
+					Consider the fixed-point format \(&lt; 1,m,n &gt;\), the weight of the sign bit is \(-2^{m}\), the sum of weights associated with all other bits is given by:
 
 					$$ \Sigma_{i=0}^{i = m+n-1}2^{m-1-i} = 2^{m-1} \bigg( \frac{1-2^{-(m+n)}}{1-2^{-1}} \bigg) = 2^{m} \big(1-2^{-(m+n)} \big)  = 2^{m} - 2^{-n}$$
 					<ul class="list-square">
 						<li>
-							Thus, if the signBit is \( 1 \), then irrespective of the value of other bits, the real-value as per the 2's complement representation is always negative. That's why the term signBit.
+							Thus, if the sign bit is \( 1 \), then irrespective of the value of other bits, the real-value as per the 2's complement representation is always negative. That's why the term sign bit.
 						</li>
 
 						<li>
