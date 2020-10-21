@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> --> <!-- To fix the size bug in chrome mobile app -->
+<meta charset="utf-8"/>
 <title>Fixed-point representation</title>
 <!-- below script is to add support for MathJax -->
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -264,7 +265,7 @@
 				</p>
 				<h2 id="fixed-point-heading"> Fixed-point representation in practice </h2>
 
-        <p>
+
 					<!--
 					<div class="btn-group" style="width:120%">
   				<button style="width:25%"> <a class="section-Links" href=#basics> Basics </a> </button>
@@ -286,18 +287,16 @@
         <div class="Link-sections"> <a class="section-Links" href=#sat&trunc> Truncation & Saturation </a> </div>
 				<div class="Link-sections"> <a class="section-Links" href=#references> References </a> </div>
 				</div> <!-- Links-to-sections -->
-        <p>
 
 			</div> <!-- content-div -->
+
 			<div class="my-info">
-				<p>
 				<strong>Author: Chirag Gupta</strong> <br>
 				Engineer at Silicon Labs, Hyderabad, India <br>
 				<ul class="list-circle">
 					<li><a href=#about-me> About me</a></li>
 					<li><a id="linkedIn" target="_blank" href="https://www.linkedin.com/in/chirag-gupta-3a001b74/"> My LinkedIn profile </a> </li>
 				</ul>
-				</p>
 			</div> <!-- my-info -->
 
       <div class="sections">
@@ -315,29 +314,22 @@
 				 fixed-point formats to give distinct real-values. Let's have a look at this more formally!!
 				<br>
         <ul class="list-circle">
-        	<li>Let us denote the fixed-point format as: <strong> &lt signBit,integerBits,precisionBits &gt </strong> ; total number of bits or word length is then:<br>
-          <center>
-          <strong>wordLength = signBit + integerBits + precisionBits </strong>
-          </center>
+        	<li>Let us denote the fixed-point format as: <strong> &lt;signBit,integerBits,precisionBits &gt; </strong> ; total number of bits or word length is then:<br>
+          $$
+          \text{wordLength = signBit + integerBits + precisionBits}
+          $$
           </li>
-          <br>
 
           <li>Suppose the bit-representation of an \( 8 \) bit number is:
           $$ B_{7}B_{6}B_{5}B_{4}B_{3}B_{2}B_{1}B_{0};\ \text{where} \ B_{i} \in \{0,1\}, \ \forall \ i \in \{0,1,\cdots,7\} $$
-          <!--<math>
-          B<sub>7</sub>B<sub>6</sub>B<sub>5</sub>B<sub>4</sub>B<sub>3</sub>
-          B<sub>2</sub>B<sub>1</sub>B<sub>0</sub>
-          </math>-->
-          ; then as per the \( <1,3,4> \) format the real-value from the bit-representation would be:
+          ; then as per the \( &lt; 1,3,4 &gt; \) format the real-value from the bit-representation would be:
           <br>
-          <center>
-          $$ B_{7}*(-2^{3}) + B_{6}*2^{2} + B_{5}*2^{1} + B_{4}*2^{0} + B_{3}*2^{-1}  + B_{2}*2^{-2} + B_{1}*2^{-3} + B_{0}*2^{-4}$$
-          </center>
-
-  				<!--<math>
-          B<sub>7</sub>*(-2<sup>3</sup>) + B<sub>6</sub>*2<sup>2</sup> + B<sub>5</sub>*2<sup>1</sup> + B<sub>4</sub>*2<sup>0</sup> + B<sub>3</sub>*2<sup>-1</sup> + B<sub>2</sub>*2<sup>-2</sup> + B<sub>1</sub>*2<sup>-3</sup> + B<sub>0</sub>*2<sup>-4</sup>
-          </math>-->
+          $$
+					B_{7}*(-2^{3}) + B_{6}*2^{2} + B_{5}*2^{1} + B_{4}*2^{0} + B_{3}*2^{-1}  + B_{2}*2^{-2} + B_{1}*2^{-3} + B_{0}*2^{-4}
+					$$
           </li>
+
+					<li>
           <ul class="list-square">
           	<li>
 							This representation is known as the <em>2's complement representation</em>
@@ -351,39 +343,34 @@
             <li>
 							<strong class="section-heading"> Note: </strong> The weight associated with the sign bit is
             $$ -2^{integerBits} $$
-						<!--<math>
-            -2<sup> integerBits </sup>
-            </math>-->
             </li>
           </ul> <!-- list-square -->
-					<li>But in hardware there is no concept of binary point, so the stored-value in hardware is:<br>
-          <center>
-           $$ B_{7}*2^{7} + B_{6}*2^{6} + B_{5}*2^{5} + B_{4}*2^{4} + B_{3}*2^{3} + B_{2}*2^{2} + B_{1}*2^{1} + B_{0}*2^{0}   $$
-          </center>
-          <!--<math>
-          B<sub>7</sub>*2<sup>7</sup> + B<sub>6</sub>*2<sup>6</sup> + B<sub>5</sub>*2<sup>5</sup> + B<sub>4</sub>*2<sup>4</sup> + B<sub>3</sub>*2<sup>3</sup> + B<sub>2</sub>*2<sup>2</sup> + B<sub>1</sub>*2<sup>1</sup> + B<sub>0</sub>*2<sup>0</sup>
-          </math>-->
+					</li>
 
+					<li>But in hardware there is no concept of binary point, so the stored-value in hardware is:<br>
+           $$
+					 B_{7}*2^{7} + B_{6}*2^{6} + B_{5}*2^{5} + B_{4}*2^{4} + B_{3}*2^{3} + B_{2}*2^{2} + B_{1}*2^{1} + B_{0}*2^{0}
+					 $$
           </li>
 
 					<li>
-						<strong class="section-heading"> 2's complement representation: </strong> If the fixed-point format \( <1,m,n> \) is used to interpret the bit-representation: \( B_{m+n} B_{m+n-1} \cdots B_{n} \cdots B_{1} B_{0} \). The value as per the 2's complement representation is given by:
+						<strong class="section-heading"> 2's complement representation: </strong> If the fixed-point format \( &lt; 1,m,n &gt; \) is used to interpret the bit-representation: \( B_{m+n} B_{m+n-1} \cdots B_{n} \cdots B_{1} B_{0} \). The value as per the 2's complement representation is given by:
 						$$
 						\big( 2^{-n} \big)\bigg[ B_{m+n}*\big( -2^{m+n} \big) + \sum_{i = 0}^{m+n-1} B_{i}*2^{i} \bigg]; \ \text{where} \ B_{i} \ \in \ \{0,1\}, \ \forall \ i \ \in \{ 0,1,\cdots,m+n \}
 						$$
 					</li>
 
 					<li>
-
 					This can be viewed as a mapping/transformation (not linear, because linear transformation is defined for two vector spaces over the same field) from the \( (m+n+1) \) dimensional vector space over the binary field \( \mathbb{F}_{2} = \{0,1\} \) to \( 1 \) dimensional vector space over the field \( \mathbb{R} \).
 					$$
-					\text{T}_{<1,m,n>} \ : \ \mathbb{F}_{2}^{m+n+1} \ \rightarrow \ \mathbb{R} \\
+					\text{T}_{&lt; 1,m,n &gt;} \ : \ \mathbb{F}_{2}^{m+n+1} \ \rightarrow \ \mathbb{R} \\
 					$$
-					The mapping for fixed-point format \( <1,m,n> \) is defined as follows:
+					The mapping for fixed-point format \( &lt; 1,m,n &gt; \) is defined as follows:
 					$$
-					\text{T}_{<1,m,n>} \big( B_{m+n} B_{m+n-1} \cdots B_{n} \cdots B_{1} B_{0} \big) = \big( 2^{-n} \big)\bigg[ B_{m+n}*\big( -2^{m+n} \big) + \sum_{i = 0}^{m+n-1} B_{i}*2^{i} \bigg]
+					\text{T}_{&lt; 1,m,n &gt;} \big( B_{m+n} B_{m+n-1} \cdots B_{n} \cdots B_{1} B_{0} \big) = \big( 2^{-n} \big)\bigg[ B_{m+n}*\big( -2^{m+n} \big) + \sum_{i = 0}^{m+n-1} B_{i}*2^{i} \bigg]
 					$$
 					This transformation/mapping also has some interesting properties like:
+					<li>
 					<ul class="list-square">
 						<li>
 							It maps the zero element in \( \mathbb{F}_{2}^{m+n+1} \) to the zero element in \( \mathbb{R} \).
@@ -394,23 +381,21 @@
 						</li>
 
 						<li>
-							Although, the transformation of sum, \( \text{T}_{<1,m,n>} \big( X \oplus Y \big) \), is equal to sum of transformations, \( \text{T}_{<1,m,n>} \big( X \big) + \text{T}_{<1,m,n>} \big( Y \big) \);
+							Although, the transformation of sum, \( \text{T}_{&lt; 1,m,n &gt;} \big( X \oplus Y \big) \), is equal to sum of transformations, \( \text{T}_{&lt; 1,m,n &gt;} \big( X \big) + \text{T}_{&lt; 1,m,n &gt;} \big( Y \big) \);
 							where \( '\oplus' \) represents XOR addition in \( \mathbb{F}_{2}^{m+n+1} \), and '+' represents the standard addition in \( \mathbb{R} \)
 							<br>
 							But this is not true in strict sense as \( X \oplus Y \ \notin \mathbb{F}_{2}^{m+n+1}\). As we will see later, \( X \oplus Y \ \in \mathbb{F}_{2}^{m+n+2}\), and the actual relation is:
 							$$
-							\text{T}_{<1,m+1,n>} \big( X \oplus Y \big) = \text{T}_{<1,m,n>} \big( X \big) + \text{T}_{<1,m,n>} \big( Y \big)
+							\text{T}_{&lt; 1,m+1,n &gt;} \big( X \oplus Y \big) = \text{T}_{&lt; 1,m,n &gt;} \big( X \big) + \text{T}_{&lt; 1,m,n &gt;} \big( Y \big)
 							$$
 							This will become clear, when we see addition of fixed-point numbers
 						</li>
 					</ul> <!-- list-square -->
-
 					</li>
 
-					<br>
-          <li>
+					<li>
 					The weight associated with the signBit in the 2's complement representation is negative, and the absolute value of this weight is more than sum of absolute values of the weights associated with all other bits.
-					Consider the fixed-point format \(<1,m,n>\), the weight of the signBit is \(-2^{m}\), the sum of weights associated with all other bits is given by:
+					Consider the fixed-point format \(&lt; 1,m,n &gt;\), the weight of the signBit is \(-2^{m}\), the sum of weights associated with all other bits is given by:
 
 					$$ \Sigma_{i=0}^{i = m+n-1}2^{m-1-i} = 2^{m-1} \bigg( \frac{1-2^{-(m+n)}}{1-2^{-1}} \bigg) = 2^{m} \big(1-2^{-(m+n)} \big)  = 2^{m} - 2^{-n}$$
 					<ul class="list-square">
@@ -430,177 +415,117 @@
 
           <li> Let's look at a few examples to demonstrate the above concepts clearly. <br>
           <ul class="list-square">
-          	<li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be \( <1,0,1> \) <br>
+          	<li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be \( &lt; 1,0,1 &gt; \) <br>
             - Maximum value (= <strong> 01 </strong>) that can be represented is: <br>
-            <center>
             $$ 0*(-2^0) + 1*2^{-1} = +0.5 $$
-            </center>
-
-            <!-- <math>
-            0*(-2<sup>0</sup>) + 1*2<sup>-1</sup> = + 0.5 (= <strong> 01 </strong>)
-            </math> -->
             <br>
             - Minimum value (= <strong> 10 </strong>) that can be represented is: <br>
-            <center>
             $$ 1*(-2^0) + 0*2^{-1} = - 1.0 $$
-            </center>
-
-            <!-- <math>
-            1*(-2<sup>0</sup>) + 0*2<sup>-1</sup> = - 1.0
-            </math> -->
 
             </li>
-            <li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be  \( <1, -1 ,2> \) <br>
+
+            <li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be  \( &lt; 1, -1 ,2 &gt; \) <br>
             - Maximum value (= <strong> 01 </strong>) that can be represented is: <br>
-            <center>
             $$ 0*(-2^{-1}) + 1*2^{-2} = +0.25 $$
-            </center>
-
-            <!-- <math>
-            0*(-2<sup>-1</sup>) + 1*2<sup>-2</sup> = + 0.25
-            </math> -->
-
             <br>
             - Minimum value (= <strong> 10 </strong>) that can be represented is: <br>
-            <center>
             $$ 1*(-2^{-1}) + 0*2^{-2} = -0.50 $$
-            </center>
-
-            <!-- <math>
-            1*(-2<sup>-1</sup>) + 0*2<sup>-2</sup> = - 0.50
-            </math> -->
 
             </li>
-            <li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be \( <1, -2 ,3> \) <br>
+
+            <li>Let the fixed-point format for interpreting/mapping a \( 2 \) bit number be \( &lt; 1, -2 ,3 &gt; \) <br>
             - Maximum value (= <strong> 01 </strong>) that can be represented is: <br>
-            <center>
             $$ 0*(-2^{-2}) + 1*2^{-3} = +0.125 $$
-            </center>
-
-            <!--<math>
-            0*(-2<sup>-2</sup>) + 1*2<sup>-3</sup> = + 0.125
-            </math>-->
-
             <br>
             - Minimum value (= <strong> 10 </strong>) that can be represented is: <br>
-            <center>
             $$ 1*(-2^{-2}) + 0*2^{-3} = -0.250 $$
-            </center>
-
-            <!--<math>
-            1*(-2<sup>-2</sup>) + 0*2<sup>-3</sup> = - 0.250
-            </math>-->
 
             </li>
           </ul> <!-- list-square -->
           </li>
+
           <li>Few points to note from the above \( 3 \) examples:<br>
           <ul class="list-square">
           	<li>It's perfectly okay for the number of integer bits or precision bits to be negative, as long as the total number of bits or wordLength is positive. The numbers in the fix-point format just decide the weight multiplying each bit in the 2's complement representation</li>
-            <li>From the above \( 3 \) examples, it's clear that even though the maximum and minimum values stored in the hardware are the same, i.e. \( 1 \) and \( 2 \) respectively, the mapped values based on the fixed-point format are quite different, which just depends on the weights assigned to the bits.</li>
+
+						<li>From the above \( 3 \) examples, it's clear that even though the maximum and minimum values stored in the hardware are the same, i.e. \( 1 \) and \( 2 \) respectively, the mapped values based on the fixed-point format are quite different, which just depends on the weights assigned to the bits.</li>
           </ul> <!-- list-square -->
           </li>
         </ul> <!-- list-circle -->
         Next, I discuss how to get the real-value based on the fixed-point format from the value stored in the hardware and vice-versa. I distingusih between two cases: with no sign bit (only positive part of real-line), and with a sign-bit.<br>
         <ul class="list-circle">
         	<li><strong class="section-heading">When there is no sign bit:</strong> To get the actual value from the value stored in hardware; all we have to do is to multiply the value stored in hardware by the lowest possible weight in fixed-point format:<br>
-          - For format \( <0,0,1> \), lowest possible weight is  \( 2^{-1} \)  ; for format \( <0,-1,2> \), lowest possible weight is \( 2^{-2} \) ; for format \( <0,-2,3> \), lowest possible weight is  \( 2^{-3} \) </li>
+          - For format \( &lt; 0,0,1 &gt; \), lowest possible weight is  \( 2^{-1} \)  ; for format \( &lt; 0,-1,2 &gt; \), lowest possible weight is \( 2^{-2} \) ; for format \( &lt; 0,-2,3 &gt; \), lowest possible weight is  \( 2^{-3} \) </li>
 
           <li><strong class="section-heading">When there is a sign bit:</strong> Assume a \( 5 \) bit number with bit-representation:
           $$ B_{4}B_{3}B_{2}B_{1}B_{0};\ \text{where} \ B_{i} \in \{0,1\}, \ \forall \ i \in \{0,1,\cdots,4\} $$
-          <!--<math> B<sub>4</sub>B<sub>3</sub>B<sub>2</sub>B<sub>1</sub>B<sub>0</sub>
-          </math>-->
           <br>
           <ul class="list-square">
             <li> value stored in hardware will be:<br>
-            <center>
             $$ \text{hard_val} = B_{4}*2^{4} + B_{3}*2^{3} + B_{2}*2^{2} + B_{1}*2^{1} + B_{0}*2^{0} $$
-            </center>
-
-            <!-- <math>
-            B<sub>4</sub> * 2<sup>4</sup> + B<sub>3</sub> * 2<sup>3</sup> + B<sub>2</sub> * 2<sup>2</sup> + B<sub>1</sub> * 2<sup>1</sup> + B<sub>0</sub> * 2<sup>0</sup>
-            </math> -->
-
-            <br>
             </li>
-            <li>	now suppose we want to convert this value stored in the hardware to a real-value. As per fixed-point format \( <1,2,2> \), the real-value will be: <br>
-            <center>
+
+            <li>	now suppose we want to convert this value stored in the hardware to a real-value. As per fixed-point format \( &lt; 1,2,2 &gt; \), the real-value will be: <br>
             $$ \text{real_val} = B_{4}*(-2^{2}) + B_{3}*2^{1} + B_{2}*2^{0} + B_{1}*2^{-1} + B_{0}*2^{-2} $$
-            </center>
-
-            <!--<math>
-            B<sub>4</sub> * (-2<sup>2</sup>)+ B<sub>3</sub> * 2<sup>1</sup> + B<sub>2</sub> * 2<sup>0</sup> + B<sub>1</sub> * 2<sup>-1</sup> + B<sub>0</sub> * 2<sup>-2</sup>
-            </math>-->
-
-            <br>
             </li>
-            <li> 	to find the real-value as per fixed-point format, we first multiply the hardware-value with the lowest possible weight as per fix-point format, which is \( 2^{-2} \) for \( <1,2,2> \), let’s call this real_val_ps <br>
-            <center>
+
+            <li> 	to find the real-value as per fixed-point format, we first multiply the hardware-value with the lowest possible weight as per fix-point format, which is \( 2^{-2} \) for \( &lt; 1,2,2 &gt; \), let’s call this real_val_ps <br>
             $$ \text{real_val_ps} = B_{4}*(2^{2}) + B_{3}*2^{1} + B_{2}*2^{0} + B_{1}*2^{-1} + B_{0}*2^{-2} $$
-            </center>
-
-            <!--<math>
-            B<sub>4</sub> * (2<sup>2</sup>)+ B<sub>3</sub> * 2<sup>1</sup> + B<sub>2</sub> * 2<sup>0</sup> + B<sub>1</sub> * 2<sup>-1</sup> + B<sub>0</sub> * 2<sup>-2</sup>
-            </math> -->
-
-            <br>
             </li>
+
             <li>
             If  \( B_{4} = 0  \), then \( \text{real_val} = \text{real_val_ps} \);  otherwise if  \( B_{4} = 1 \), then \( \text{real_val} = \text{real_val_ps} -  2*2^{2} \)
             </li>
+
             <li>
             if \( \text{hard_val} \geq 2^{4} \) , then \( B_{4} = 1 \); otherwise \( B_{4} = 0 \)
             </li>
           </ul> <!-- list-square -->
           </li>
         </ul> <!-- list-circle -->
-        <!--Thus, as a general rule, <br>
-        $$ \text{if hard_val} \geq 2^{(wordLength - 1)}, \text{real_val = hard_val} * 2^{(-precisionBits)} - 2^{(integerBits+1)};$$
-        $$\text{otherwise, real_val = hard_val} * 2^{(-precisionBits)} $$
-
-				<br>-->
+        
 				<br>
-				The algorithm for converting the values stored in hardware, \( x_{hw} \), to real-value, \( x_{re} \), as per the fixed-point format \( <1,m,n> \)
+				The algorithm for converting the values stored in hardware, \( x_{hw} \), to real-value, \( x_{re} \), as per the fixed-point format \( &lt; 1,m,n &gt; \)
 				<div class="algorithms">
 					<hr>
 					<strong class="section-heading" style="font-size:1.2em"> Algorithm 1 </strong>
 					<hr>
-					<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp\( x_{hw}, <1,m,n> \)
+					<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp; \( x_{hw}, &lt; 1,m,n &gt; \)
 					<br>
 					<strong class="algorithm-control-statements"> Outputs: </strong> \( x_{re} \)
 					<br>
 					<br>
 					\( x_{temp} = x_{hw}*2^{-n} \)
 					<br>
-					<strong class="algorithm-control-statements"> if </strong> &nbsp \( x_{hw} \geq 2^{m+n}\), &nbsp <strong class="algorithm-control-statements"> then </strong>
+					<strong class="algorithm-control-statements"> if </strong> &nbsp; \( x_{hw} \geq 2^{m+n}\), &nbsp; <strong class="algorithm-control-statements"> then </strong>
 					<br>
-					&nbsp &nbsp &nbsp \( x_{re} \ \ = x_{temp} - 2^{m+1}\ ; \) <br>
+					&nbsp; &nbsp; &nbsp; \( x_{re} \ \ = x_{temp} - 2^{m+1}\ ; \) <br>
 					<strong class="algorithm-control-statements"> else </strong> <br>
-					&nbsp &nbsp &nbsp \( x_{re} \ \ = x_{temp} \ ; \) <br>
+					&nbsp; &nbsp; &nbsp; \( x_{re} \ \ = x_{temp} \ ; \) <br>
 					<strong class="algorithm-control-statements"> end </strong> <br>
 					<br>
 					<hr>
 				</div> <!-- algorithms -->
 
 				<br>
-				The algorithm for converting real-value, \( x_{re} \), as per the fixed-point format \( <1,m,n> \), to the value stored in hardware, \( x_{hw} \)
+				The algorithm for converting real-value, \( x_{re} \), as per the fixed-point format \( &lt; 1,m,n &gt; \), to the value stored in hardware, \( x_{hw} \)
 				<div class="algorithms">
 					<hr>
 					<strong class="section-heading" style="font-size:1.2em"> Algorithm 2 </strong>
 					<hr>
 
-					<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp\( x_{re}, <1,m,n> \)
+					<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp;\( x_{re}, &lt; 1,m,n &gt; \)
 					<br>
 					<strong class="algorithm-control-statements"> Outputs: </strong> \( x_{hw} \)
 					<br>
 					<br>
 					\( x_{temp} = x_{re}*2^{n} \)
 					<br>
-					<strong class="algorithm-control-statements"> if </strong> &nbsp \( x_{hw} \geq 0\), &nbsp <strong class="algorithm-control-statements"> then </strong>
+					<strong class="algorithm-control-statements"> if </strong> &nbsp; \( x_{hw} \geq 0\), &nbsp; <strong class="algorithm-control-statements"> then </strong>
 					<br>
-					&nbsp &nbsp &nbsp \( x_{hw} \ \ = x_{temp} \ ; \) <br>
+					&nbsp; &nbsp; &nbsp; \( x_{hw} \ \ = x_{temp} \ ; \) <br>
 					<strong class="algorithm-control-statements"> else </strong> <br>
-					&nbsp &nbsp &nbsp \( x_{hw} \ \ = x_{temp} + 2^{(m+n+1)} \ ; \) <br>
+					&nbsp; &nbsp; &nbsp; \( x_{hw} \ \ = x_{temp} + 2^{(m+n+1)} \ ; \) <br>
 					<strong class="algorithm-control-statements"> end </strong> <br>
 					<br>
 					<hr>
@@ -608,71 +533,57 @@
 
         <a href=#fixed-point-heading > Back to Top </a>
 
-        </p>
+
       </div> <!-- section1 -->
-      <div class="sections">
-      	<p id="range&resolution">
+
+      <div class="sections" id="range&resolution">
         <h2 class="section-heading"> Range & Resolution </h2>
         This section discusses about concepts of Range and Resolution for a fixed-point format. <br>
         <ul class="list-circle">
         	<li>
-          The set of real-values that can be represented by the fixed-point format \( <1,m,n> \) is given by <br>
-          <center>
+          The set of real-values that can be represented by the fixed-point format \( &lt; 1,m,n &gt; \) is given by <br>
           $$ \Re (m,n) = \{-2^{m} + i*2^{-n}: 0 \leq i \leq \big(2^{(m+n+1)} - 1 \big) \},\ \text{and i is an integer} $$
-          </center>
           <br>
-          <center>
+
           Or
-          </center>
-
-          <!-- <math>
-          R(m,n) = {-2<sup>m</sup> + i*2<sup>-n</sup> : i &#8712 [0,2<sup>(m+n+1)</sup> - 1]}, and i is an integer ,or
-          </math> -->
-
           <br>
-          <center>
           $$ \Re (m,n) = \{i*2^{-n}:  -2^{(m+n)}  \leq i \leq \big( 2^{(m+n)} - 1 \big) \},\ \text{and i is an integer} $$
-          </center>
-
-          <!-- <math class="math-eq">
-          R(m,n) = {i*2<sup>-n</sup> : i &#8712 [-2<sup>(m+n)</sup>,2<sup>(m+n)</sup> - 1]}, and i is an integer
-          </math> -->
-
           </li>
+
           <li>
           The cardinality (size) of the above set is:
           $$ |\Re (m,n) | = 2^{(m+n+1)} \ \text{or} \ 2^{wordLength} $$
           <!-- <math> |R(m,n)| = 2<sup>(m+n+1)</sup> or 2<sup>wordLength</sup></math> -->
           </li>
+
           <li>
-          <strong> Resolution </strong>for a fixed-point format is defined as the step size/increment from one real-value to the next. It's easy to see that the fixed-point format \( <1,m,n> \) has a resolution :
+          <strong> Resolution </strong>for a fixed-point format is defined as the step size/increment from one real-value to the next. It's easy to see that the fixed-point format \( &lt; 1,m,n &gt; \) has a resolution :
           $$ \Delta = 2^{-n} \ \text{or} \ 2^{-precisionBits} $$
           </li>
+
           <li>
 						<strong> Range </strong> for a fixed-point format gives the set of all possible real-values that can be represented. Some authors define it as the difference between the highest and lowest possible values.
-          The fixed-point format \( <1,m,n> \) can represent \( 2^{m+n+1}\) real-values in the Range:
+          The fixed-point format \( &lt; 1,m,n &gt; \) can represent \( 2^{m+n+1}\) real-values in the Range:
           $$ [-2^{m},2^{m} - 2^{-n} ] $$
-					Thus, all points in the domain of the \( (m+n+1) \) dimensional vector space over the field \( \mathbb{F}_{2} \) are mapped to a set of \( 2^{m+n+1} \) values in \( \mathbb{R} \) using the mapping \( T_{<1,m,n>} \). We define this set as the Range for the transformation \( T_{<1,m,n>} \)
+					Thus, all points in the domain of the \( (m+n+1) \) dimensional vector space over the field \( \mathbb{F}_{2} \) are mapped to a set of \( 2^{m+n+1} \) values in \( \mathbb{R} \) using the mapping \( T_{&lt; 1,m,n &gt;} \). We define this set as the Range for the transformation \( T_{&lt; 1,m,n &gt;} \)
           </li>
-					<br>
+
           <li>
           The range is decided mainly by the number of integer bits, as they have the highest weights associated with them in the 2’s complement representation. The precision bits will only determine the amount of accuracy with which a value lying in \( [i, i+1) \), where \( -2^{m} \leq i \leq 2^{m}-1  \), and \( i \) is an integer, can be represented.
           </li>
         </ul> <!-- list-circle -->
         <a href=#fixed-point-heading > Back to Top </a>
-        </p>
       </div> <!-- section2 -->
 
-      <div class="sections">
-      	<p id="rangeExtension">
+      <div class="sections" id="rangeExtension">
         <h2 class="section-heading"> Sign-bit Extension </h2>
         Sometimes we need to represent an \( n \) bit number using \( m \) bits, where \( m > n \). What should be the value of these <em>'new'</em> bits such that the underlying real-value, based on the fixed-point format, remains the same?? <br>
         The hint for the answer is in the heading of this section. Let's take an example to understand this.<br>
 
         <ul class="list-circle">
-        	<li> Let \( X_{hw}[5:0] = X_{5} X_{4} X_{3} X_{2} X_{1} X_{0}\)<!--x<sub>hw </sub>[5:0] = x<sub>5</sub> x<sub>4</sub> x<sub>3</sub> x<sub>2</sub> x<sub>1</sub> x<sub>0</sub>--> with fix-point format \( <1,3,2> \) and we want to represent it using 8 bits,
+        	<li> Let \( X_{hw}[5:0] = X_{5} X_{4} X_{3} X_{2} X_{1} X_{0}\)<!--x<sub>hw </sub>[5:0] = x<sub>5</sub> x<sub>4</sub> x<sub>3</sub> x<sub>2</sub> x<sub>1</sub> x<sub>0</sub>--> with fix-point format \( &lt; 1,3,2 &gt; \) and we want to represent it using 8 bits,
 					\( X_{hw}'[7:0] = X_{7} X_{6} X_{5} X_{4} X_{3} X_{2} X_{1} X_{0}\)	<!-- x'<sub>hw</sub>[7:0] =	x<sub>7</sub> x<sub>6</sub> x<sub>5</sub> x<sub>4</sub> x<sub>3</sub> x<sub>2</sub> x<sub>1</sub> x<sub>0</sub> --> .
-					It's quite easy to see that the new fixed-point format should be \( <1,5,2> \) for the new real-value (after choosing \( X_{7} \), and \( X_{6} \) appropriately) to be same as the previous real-value. This will also become clear once you will see the math below
+					It's quite easy to see that the new fixed-point format should be \( &lt; 1,5,2 &gt; \) for the new real-value (after choosing \( X_{7} \), and \( X_{6} \) appropriately) to be same as the previous real-value. This will also become clear once you will see the math below
    				<ul class="list-square">
           	<li> ( If \( X_{5} = 0 \); i.e, for positive numbers) <br>
             $$ x_{re} = 0*(-2^{3}) + X_{4}*2^{2} + X_{3}*2^{1} + X_{2}*2^{0} + X_{1}*2^{-1} + X_{0}*2^{-2} $$
@@ -680,6 +591,7 @@
             $$ x_{re}' = 0*(-2^{5}) + 0*2^{4} + 0*2^{3} + X_{4}*2^{2} + X_{3}*2^{1} + X_{2}*2^{0} + X_{1}*2^{-1} + X_{0}*2^{-2} $$
 						The above value is equal to the real-value, \( x_{re} \). Thus, \( X_{hw}'[7:0] = \{ X_{5}, X_{5}, X_{hw}[5:0] \} \)<!-- {x<sub>5</sub>, x<sub>5</sub>, x<sub>hw </sub>[5:0]} -->
             </li>
+
             <li>
             ( If \( X_{5} = 1 \); i.e, for negative numbers)
             $$ x_{re} = 1*(-2^{3}) + X_{4}*2^{2} + X_{3}*2^{1} + X_{2}*2^{0} + X_{1}*2^{-1} + X_{0}*2^{-2} $$
@@ -697,20 +609,19 @@
             </li>
           </ul> <!-- list-square -->
           </li>
+
           <li>
           Thus, we just need to do a sign-bit extension (copying the sign bit to fill in the new bits)
           </li>
         </ul> <!-- list-circle -->
     		<a href=#fixed-point-heading > Back to Top </a>
-        </p>
       </div> <!--section3 -->
 
-			<div class="sections">
-	    	<p id="inversion">
+			<div class="sections" id="inversion">
 	      <h2 class="section-heading"> Inversion </h2>
 				In this section, we will see discuss about the one's complement and 2's complement operations. We will see how the 2's complement operation along with 2's complement representation is a natural framework to work with negative numbers.
 				<ul class="list-circle">
-					<li>Let's consider the fixed-point format \( <1,m,n> \) and the corresponding bit-representation
+					<li>Let's consider the fixed-point format \( &lt; 1,m,n &gt; \) and the corresponding bit-representation
 						$$ X_{hw} = X_{m+n} X_{m+n-1} \cdots X_{1} X_{0} $$
 						As per the fixed-point format, the real-value is
 						$$ x_{re} = X_{m+n}*(-2^{m}) + X_{m+n-1}*2^{m-1} + \cdots + X_{n}*2^{0} + \cdots + X_{0}*2^{-n} $$
@@ -747,17 +658,16 @@
 				<br>
 				<br>
 				<a href=#fixed-point-heading > Back to Top </a>
-        </p>
+
 			</div> <!--section4 -->
 
-			<div class="sections">
-	    	<p id="arithmetic">
+			<div class="sections" id="arithmetic">
 	      <h2 class="section-heading"> Arithmetic Operations </h2>
 				<!-- <ol class="ordered-list"> -->
 					<h3 class="internal-heading"> Addition </h3>
 						Have you ever wondered why the binary addition is an XOR operation?? The simple answer is that the base of a binary number is \( 2 \), and the possible set of digits is \( \{ 0,1 \} \). If we add \( 1 \), and \( 1 \) in binary, the result \( 2 \) cannot be represented using the digits possible with base \( 2 \). Let's try to understand this mathematically:
 						<ul class="list-circle">
-							<li>Consider two binary numbers: \( X = 0101 \), and \( Y = 0001 \). Let \( x \), and \( y \) be the real-values of \( X \), and \( Y \) as per the fixed-point format \( <1,3,0> \).
+							<li>Consider two binary numbers: \( X = 0101 \), and \( Y = 0001 \). Let \( x \), and \( y \) be the real-values of \( X \), and \( Y \) as per the fixed-point format \( &lt; 1,3,0 &gt; \).
 								$$
 								\begin{align}
 								& x = 0*(-2^{3}) + 1*2^{2} + 0*2^{1} + 1*2^{0} = 5\\
@@ -779,10 +689,10 @@
 								Thus, binary addition of \( X = 0101 \), and \( Y = 0001 \), results in \( Z = 0110 \), which is an XOR addition.
 							</li>
 						</ul> <!-- list-circle -->
-						Now, a natural question that arises is what should be fixed-point format of the output, if the fixed-point format of input is \( <1,m,n> \).
+						Now, a natural question that arises is what should be fixed-point format of the output, if the fixed-point format of input is \( &lt; 1,m,n &gt; \).
 						Let's try to understand this through some examples
 						<ul class="list-circle">
-							<li>Consider two binary numbers: \( X = 0110 \), and \( Y = 0111 \). Let \( x \), and \( y \) be the real-values of  \( X \), and \( Y \) as per the fixed-point format \( <1,2,1> \)
+							<li>Consider two binary numbers: \( X = 0110 \), and \( Y = 0111 \). Let \( x \), and \( y \) be the real-values of  \( X \), and \( Y \) as per the fixed-point format \( &lt; 1,2,1 &gt; \)
 								$$
 								\begin{align}
 								& x = 0*(-2^{2}) + 1*2^{1} + 1*2^{0} + 0*2^{-1} = 3 \\
@@ -802,24 +712,22 @@
 								$$
 							</li>
 							<li>
-								From the above example, it's clear that addition of two numbers with fixed-point format \( <1,2,1> \) requires the output format \( <1,3,1> \)
-								to prevent any overflows. For more examples, please refer to <a href=#reference1> [1] <a>.
+								From the above example, it's clear that addition of two numbers with fixed-point format \( &lt; 1,2,1 &gt; \) requires the output format \( &lt; 1,3,1 &gt; \)
+								to prevent any overflows. For more examples, please refer to <a href=#reference1> [1] </a>.
 							</li>
 						</ul> <!-- list-circle -->
 
-					<br>
-					</li>
 					<strong class="section-heading"> Key Points: </strong>
 					<ol class="ordered-list">
 					<li>
-						The full-precision addition of two numbers, with fixed-point formats \( <1,m,n> \) each, requires \( 1 \) additional integer bit and the fixed-point format  \( <1,(m+1),n> \)
+						The full-precision addition of two numbers, with fixed-point formats \( &lt; 1,m,n &gt; \) each, requires \( 1 \) additional integer bit and the fixed-point format  \( &lt; 1,(m+1),n &gt; \)
 					</li>
 					<li>
 						If the numbers to be added have different fixed-point formats, then we must first represent them using a common fixed-point format by using <a id="sign-bit-extension-link" href=#rangeExtension> Sign-bit Extension </a> principle and then addition can be performed as shown above.
 					</li>
 					</ol> <!-- ordered-list -->
 					<!--<a href=#fixed-point-heading > Back to Top </a> -->
-					<p>
+
 					<h3 class="internal-heading"> Substraction </h3>
 					In the section on Inversion, we have already seen how taking the 2's complement of a bit-representation is a natural way of dealing with negative fixed-point numbers. Thus, substraction in fixed-point arithmetic is done by simply taking the 2's complement of the number to be substracted and performing addition with the other number.
 					<br>
@@ -827,22 +735,21 @@
 					<strong class="section-heading"> Key Points: </strong>
 					<ol class="ordered-list">
 					<li>
-						The full-precision substraction of two numbers, with fixed-point formats \( <1,m,n> \) each, requires \( 1 \) additional integer bit and the fixed-point format \( <1,(m+1),n> \)
+						The full-precision substraction of two numbers, with fixed-point formats \( &lt; 1,m,n &gt; \) each, requires \( 1 \) additional integer bit and the fixed-point format \( &lt; 1,(m+1),n &gt; \)
 					</li>
 					<li>
 						Since substraction is nothing but addition with the 2's complement of the number to be substracted, all the points discussed for addition also apply to substraction.
 					</li>
 					</ol> <!-- ordered-list -->
-					</p>
+
 					<br>
 					<a href=#fixed-point-heading > Back to Top </a>
-					</p>
+
 					<h3 class="internal-heading"> Multiplication </h3>
-					<p>
 						In this section, we will see the multiplication operation with respect to fixed-point numbers. We will try to figure out what should be the output format required for the full-precision multiplication of two fixed-point numbers, with their respective fixed-point formats
 						<ul class="list-circle">
 							<li>
-								Consider two fixed-point numbers, \( x \), and \( y \) with their respective fixed-point formats: \( <1,m_{1},n_{1} > \), and \( <1,m_{2},n_{2}> \). To find out the number of integer bits required for the output, we look at the maximum possible value that can result from the multiplication of these two numbers. The <strong>Range</strong> for the two fixed-point numbers is:
+								Consider two fixed-point numbers, \( x \), and \( y \) with their respective fixed-point formats: \( &lt; 1,m_{1},n_{1} &gt; \), and \( &lt; 1,m_{2},n_{2} &gt; \). To find out the number of integer bits required for the output, we look at the maximum possible value that can result from the multiplication of these two numbers. The <strong>Range</strong> for the two fixed-point numbers is:
 								$$
 								\begin{align}
 								& \text{Range}(x) = [-2^{m_{1}}, 2^{m_{1}} - 2^{-n_{1}}] \\
@@ -859,7 +766,7 @@
 								$$
 								This implies that the minimum number of integer bits required to represent \( z \) with full-precision is \( ( m_{1} + m_{2} + 1 ) \) (<strong>Think Why?? </strong>)
 							</li>
-							<br>
+
 							<li>
 								To find the number of precision bits required to represent \( z \), we look at the step-size or <strong>Resolution</strong>
 								of \( z \). Let's try to find out the lowest possible positive, non-zero value of \( z \), this value will be \( 1 \) step-size or Resolution away from the value \( 0 \).
@@ -875,7 +782,7 @@
 						What if there is no sign bit, or the sign bit is always zero (positive numbers)?? Intuitively, we can say that the number of bits required for full-precision output should be less in this case.
 						<ul class="list-circle">
 							<li>
-								Consider two fixed-point numbers, \( x \), and \( y \) with their respective fixed-point formats: \( <0,m_{1},n_{1} > \), and \( <0,m_{2},n_{2}> \) . To find the number of precision bits required to represent \( z \), we look at the step-size or <strong>Resolution</strong>
+								Consider two fixed-point numbers, \( x \), and \( y \) with their respective fixed-point formats: \( &lt; 0,m_{1},n_{1} &gt; \), and \( &lt; 0,m_{2},n_{2} &gt; \) . To find the number of precision bits required to represent \( z \), we look at the step-size or <strong>Resolution</strong>
 								of \( z \).
 								$$
 								\begin{align}
@@ -885,7 +792,7 @@
 								$$
 								It's clear from above that the minimum number of precision bits required to represent \( z \) with full-precision is \( (n_{1} + n_{2}) \)
 							</li>
-							<br>
+
 							<li>
 								The <strong>Range</strong> for the two fixed-point numbers is:
 								$$
@@ -905,28 +812,28 @@
 								& \leq 2^{m_{1} + m_{2}} - 2^{-(n_{1} +n_{2})}
 								\end{align}
 								$$
-								Thus, the fixed-point format  \( <0,(m_{1} + m_{2}),(n_{1}+n_{2}) > \) is <em> sufficient </em> to represent \( z \) with full-precision. The actual number of integer bits required may be less than \( (m_{1} + m_{2}) \) depending on the term in the brackets (equation just above the inequality)
+								Thus, the fixed-point format  \( &lt; 0,(m_{1} + m_{2}),(n_{1}+n_{2}) &gt; \) is <em> sufficient </em> to represent \( z \) with full-precision. The actual number of integer bits required may be less than \( (m_{1} + m_{2}) \) depending on the term in the brackets (equation just above the inequality)
 							</li>
-							<br>
+
 						</ul> <!-- list-circle -->
 						<strong class="section-heading"> Key Points: </strong>
 						<ol class="ordered-list">
 						<li>
-						The full-precision multiplication of two numbers with fixed-point formats: \( <1,m_{1},n_{1} > \), and \( <1,m_{2},n_{2} > \), requires (<em> necessary </em> and <em> sufficient </em>) the output fixed-point format to be \( <1,( m_{1} + m_{2} + 1), (n_{1} + n_{2}) > \)
+						The full-precision multiplication of two numbers with fixed-point formats: \( &lt; 1,m_{1},n_{1} &gt; \), and \( &lt; 1,m_{2},n_{2} &gt; \), requires (<em> necessary </em> and <em> sufficient </em>) the output fixed-point format to be \( &lt; 1,( m_{1} + m_{2} + 1), (n_{1} + n_{2}) &gt; \)
 						</li>
+
 						<li>
-						The fixed-point format  \( <0,(m_{1} + m_{2}),(n_{1}+n_{2}) > \) is <em> sufficient </em> to represent the full-precision multiplication of two numbers with fixed-point formats: \( <0,m_{1},n_{1} > \), and \( <0,m_{2},n_{2} > \)
+						The fixed-point format  \( &lt; 0,(m_{1} + m_{2}),(n_{1}+n_{2}) &gt; \) is <em> sufficient </em> to represent the full-precision multiplication of two numbers with fixed-point formats: \( &lt; 0,m_{1},n_{1} &gt; \), and \( &lt; 0,m_{2},n_{2} &gt; \)
 						</li>
 						</ol>
-					</p>
+
 					<br>
 					<a href=#fixed-point-heading > Back to Top </a>
 					<h3 class="internal-heading"> Division </h3>
-					<p>
 						In this section, we will look at the Division operation with respect to fixed-point numbers and again try to figure out the fixed-point format required for the full-precision representation of the output.
 						<ul class="list-circle">
 							<li>
-								<strong class="section-heading"> (Signed Division) </strong> Consider two numbers \( x \), and \( y \) with their respective fixed-point formats: \( <1,m_{1}, n_{1} > \), and \( <1,m_{2}, n_{2} > \). We wish to find the fixed-point format required to represent the output \( x/y \) with full-precision, provided that \( y \) is non-zero.
+								<strong class="section-heading"> (Signed Division) </strong> Consider two numbers \( x \), and \( y \) with their respective fixed-point formats: \( &lt; 1,m_{1}, n_{1} &gt; \), and \( &lt; 1,m_{2}, n_{2} &gt; \). We wish to find the fixed-point format required to represent the output \( x/y \) with full-precision, provided that \( y \) is non-zero.
 								Let's try to find the <strong> Range </strong> of \( x/y \)
 								$$
 								\begin{align}
@@ -943,12 +850,15 @@
 								$$
 								Thus, the Range of \( z \) is \( [-2^{(m_{1} + n_{2})}, 2^{(m_{1} + n_{2})}] \), which requires \( (m_{1} + n_{2} + 1) \) integer bits
 							</li>
+
 							<li>
 								All possible values in the <strong> Range </strong> cannot be represented using finite precision bits, e.g., \( 1/3 = 0.6666 \cdots \)
 							</li>
+
 							<li>
-								The full-precision division of \( <1,m_{1}, n_{1} > \), and \( <1,m_{2}, n_{2} > \), requires format \( <1,(m_{1} + n_{2} + 1), \infty > \).
+								The full-precision division of \( &lt; 1,m_{1}, n_{1} &gt; \), and \( &lt; 1,m_{2}, n_{2} &gt; \), requires format \( &lt; 1,(m_{1} + n_{2} + 1), \infty > \).
 							</li>
+
 							<li>
 								One useful value for number of precision bits can be obtained as:
 								$$
@@ -963,7 +873,7 @@
 						Now, let's look at the case of division of two unsigned numbers
 						<ul class="list-circle">
 							<li>
-								<strong class="section-heading"> (Unsigned Division) </strong> Let \( x \), and \( y \) be two numbers with fixed-point formats \( <0,m_{1},n_{1} > \), and \( <0,m_{2},n_{2} > \) respectively.
+								<strong class="section-heading"> (Unsigned Division) </strong> Let \( x \), and \( y \) be two numbers with fixed-point formats \( &lt; 0,m_{1},n_{1} &gt; \), and \( &lt; 0,m_{2},n_{2} &gt; \) respectively.
 								The <strong> Range </strong> of \( x/y \) is:
 								$$
 								\begin{align}
@@ -980,12 +890,15 @@
 								$$
 								Thus, the Range of \( z \) is \( [0, 2^{(m_{1} + n_{2})} - 2^{(n_{2} - n_{1})} ] \), which requires \( (m_{1} + n_{2}) \) integer bits
 							</li>
+
 							<li>
 								As shown for unsigned division, all possible points in the range cannot be represented using finite number of precision bits.
 							</li>
+
 							<li>
-								The full-precision division of \( <0,m_{1} n_{1} > \), and \( <0,m_{2}, n_{2} > \), requires format \( <0,(m_{1} + n_{2}), \infty > \).
+								The full-precision division of \( &lt; 0,m_{1} n_{1} &gt; \), and \( &lt; 0,m_{2}, n_{2} &gt; \), requires format \( &lt; 0,(m_{1} + n_{2}), \infty &gt; \).
 							</li>
+
 							<li>
 								One useful value for the number of precision bits can be obtained as below:
 								$$
@@ -1008,33 +921,31 @@
 						<strong class="section-heading"> Key Points: </strong>
 						<ol class="ordered-list">
 						<li>
-						The full-precision division of two numbers with fixed-point formats:numerator - \( <1,m_{1},n_{1} > \), and denominator - \(<1,m_{2},n_{2} > \), requires the output fixed-point format to be \( <1,(m_{1} + n_{2} + 1), \infty > \).
+						The full-precision division of two numbers with fixed-point formats:numerator - \( &lt; 1,m_{1},n_{1} &gt; \), and denominator - \(&lt; 1,m_{2},n_{2} &gt; \), requires the output fixed-point format to be \( &lt; 1,(m_{1} + n_{2} + 1), \infty > \).
 						One practical value for number of precision bits is \( ( m_{2} + n_{1} ) \)
 						</li>
+
 						<li>
-							The full-precision division of two numbers with fixed-point formats:numerator - \( <0,m_{1},n_{1} > \), and denominator - \( <0,m_{2},n_{2} > \), requires the output fixed-point format to be \( <0,(m_{1} + n_{2}), \infty > \).
+							The full-precision division of two numbers with fixed-point formats:numerator - \( &lt; 0,m_{1},n_{1} &gt; \), and denominator - \( &lt; 0,m_{2},n_{2} &gt; \), requires the output fixed-point format to be \( &lt; 0,(m_{1} + n_{2}), \infty > \).
 							One practical value for number of precision bits is
 							\(
 							\left \lceil{\bigg({\text{log}_{2} (2^{m_{2} + n_{1}} - 2^{n_{1} - n_{2}})}\bigg)}\right \rceil
 							\)
 						</li>
 						</ol>
-					</p>
-        </p>
 				<a href=#fixed-point-heading > Back to Top </a>
 			</div> <!--section5 -->
 
 
-			<div class="sections">
-	    	<p id="sat&trunc">
+			<div class="sections" id="sat&trunc">
 	      <h2 class="section-heading"> Truncation & Saturation </h2>
 				<h3 class="internal-heading"> Saturation </h3>
 				<strong>Saturation</strong> is the term used to limit the maximum and minimum values of some fixed-point number.
 				<br>
 				<br>
-				Suppose the bit-representation \( X_{hw} \) is mapped to the real-value \( x_{re} \) using a fixed-point format \( <1,m_{ip},n_{ip}> \). The range of \(x_{re}\) is \( [-2^{m_{ip}}, 2^{m_{ip}} ) \).
+				Suppose the bit-representation \( X_{hw} \) is mapped to the real-value \( x_{re} \) using a fixed-point format \( &lt; 1,m_{ip},n_{ip} &gt; \). The range of \(x_{re}\) is \( [-2^{m_{ip}}, 2^{m_{ip}} ) \).
 				Due to some constraints, we want to saturate the value \( x_{re} \) so that it always lies in the range \( [-2^{m_{op}}, 2^{m_{op}} ) \), such that \( [-2^{m_{op}}, 2^{m_{op}} ) \ \subset \ [-2^{m_{ip}}, 2^{m_{ip}} ) \).
-				Let the new value be \( x_{re}' \), with the fixed-point format \( <1,m_{op},n_{ip} > \), where \( m_{ip} > m_{op}\).
+				Let the new value be \( x_{re}' \), with the fixed-point format \( &lt; 1,m_{op},n_{ip} &gt; \), where \( m_{ip} > m_{op}\).
 				<ul class="list-circle">
 					<li> <strong class="section-heading"> Removing most significant integer bits </strong>  <br>
 						We want to achieve this saturation by removing the <em> most significant </em> \( (m_{ip}-m_{op}) \) <em> integer bits </em> from the
@@ -1046,26 +957,26 @@
 							<strong class="section-heading" style="font-size:1.2em"> Algorithm 3 </strong>
 							<hr>
 
-							<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp\( x_{re}, <1,m_{ip},n_{ip}>, <1,m_{op},n_{ip}> \)
+							<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp;\( x_{re}, &lt; 1,m_{ip},n_{ip} &gt;, &lt; 1,m_{op},n_{ip} &gt; \)
 							<br>
 							<strong class="algorithm-control-statements"> Outputs: </strong> \(x_{re}' \)
 							<br>
 							<br>
-							<strong class="algorithm-control-statements"> if </strong> &nbsp \( x_{re} \geq 0\), &nbsp <strong class="algorithm-control-statements"> then </strong>
+							<strong class="algorithm-control-statements"> if </strong> &nbsp; \( x_{re} \geq 0\), &nbsp; <strong class="algorithm-control-statements"> then </strong>
 							<br>
-							&nbsp &nbsp &nbsp \( x_{temp} = x_{re}*2^{-m_{op}} \ ;\) <br>
-							&nbsp &nbsp &nbsp \( x_{keep} = \big( x_{temp} - \left \lfloor x_{temp} \right \rfloor \big) *2^{m_{op}} \ ; \) <br>
-							&nbsp &nbsp &nbsp \( x_{re}' \ \ = x_{keep} \ ; \) <br>
+							&nbsp; &nbsp; &nbsp; \( x_{temp} = x_{re}*2^{-m_{op}} \ ;\) <br>
+							&nbsp; &nbsp; &nbsp; \( x_{keep} = \big( x_{temp} - \left \lfloor x_{temp} \right \rfloor \big) *2^{m_{op}} \ ; \) <br>
+							&nbsp; &nbsp; &nbsp; \( x_{re}' \ \ = x_{keep} \ ; \) <br>
 							<strong class="algorithm-control-statements"> else </strong> <br>
-							&nbsp &nbsp &nbsp \( x_{temp} = \big( x_{re} + 2^{m_{ip}} \big)*2^{-m_{op}} \ ; \) <br>
-							&nbsp &nbsp &nbsp \( x_{keep} = \big( x_{temp} - \left \lfloor x_{temp} \right \rfloor \big) *2^{m_{op}} \ ; \) <br>
-							&nbsp &nbsp &nbsp \( x_{re}' \ \ = x_{keep} - 2^{m_{op}} \ ; \) <br>
+							&nbsp; &nbsp; &nbsp; \( x_{temp} = \big( x_{re} + 2^{m_{ip}} \big)*2^{-m_{op}} \ ; \) <br>
+							&nbsp; &nbsp; &nbsp; \( x_{keep} = \big( x_{temp} - \left \lfloor x_{temp} \right \rfloor \big) *2^{m_{op}} \ ; \) <br>
+							&nbsp; &nbsp; &nbsp; \( x_{re}' \ \ = x_{keep} - 2^{m_{op}} \ ; \) <br>
 							<strong class="algorithm-control-statements"> end </strong> <br>
 							<br>
 							<hr>
 						</div> <!-- algorithms -->
 					</li>
-					<br>
+
 					<li>
 						<strong class="section-heading"> Removing least significant integer bits </strong>  <br>
 							We want to achieve this saturation by removing the <em> least significant </em> \( (m_{ip}-m_{op}) \) <em> integer bits </em> from the
@@ -1077,22 +988,22 @@
 								<strong class="section-heading" style="font-size:1.2em"> Algorithm 4 </strong>
 								<hr>
 
-								<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp\( x_{re}, <1,m_{ip},n_{ip}>, <1,m_{op},n_{ip}> \)
+								<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp;\( x_{re}, &lt; 1,m_{ip},n_{ip} &gt;, &lt; 1,m_{op},n_{ip} &gt; \)
 								<br>
 								<strong class="algorithm-control-statements"> Outputs: </strong> \(x_{re}' \)
 								<br>
 								<br>
-								<strong class="algorithm-control-statements"> if </strong> &nbsp \( x_{re} \geq 0\), &nbsp <strong class="algorithm-control-statements"> then </strong>
+								<strong class="algorithm-control-statements"> if </strong> &nbsp; \( x_{re} \geq 0\), &nbsp; <strong class="algorithm-control-statements"> then </strong>
 								<br>
-								&nbsp &nbsp &nbsp \( x_{temp1} = x_{re} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{temp2} = x_{temp1}*2^{m_{op} - m_{ip}} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{keep1} = \big( x_{temp1} - \left \lfloor x_{temp1} \right \rfloor \big) \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{keep2} = \big( \left \lfloor x_{temp2} \right \rfloor \big) \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp1} = x_{re} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp2} = x_{temp1}*2^{m_{op} - m_{ip}} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep1} = \big( x_{temp1} - \left \lfloor x_{temp1} \right \rfloor \big) \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep2} = \big( \left \lfloor x_{temp2} \right \rfloor \big) \ ; \) <br>
 								<strong class="algorithm-control-statements"> else </strong> <br>
-								&nbsp &nbsp &nbsp \( x_{temp1} = x_{re} + 2^{m_{ip}} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{temp2} = x_{temp1}*2^{m_{op} - m_{ip}} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{keep1} = \big( x_{temp1} - \left \lfloor x_{temp1} \right \rfloor \big) \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{keep2} = \big( \left \lfloor x_{temp2} \right \rfloor - 2^{m_{op}}\big) \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp1} = x_{re} + 2^{m_{ip}} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp2} = x_{temp1}*2^{m_{op} - m_{ip}} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep1} = \big( x_{temp1} - \left \lfloor x_{temp1} \right \rfloor \big) \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep2} = \big( \left \lfloor x_{temp2} \right \rfloor - 2^{m_{op}}\big) \ ; \) <br>
 								<strong class="algorithm-control-statements"> end </strong> <br>
 								<br>
 								\( x_{re}' = x_{keep1} + x_{keep2} \)
@@ -1101,7 +1012,7 @@
 								<hr>
 							</div> <!-- algorithms -->
 					</li>
-					<br>
+
 					<li>
 						<strong class="section-heading"> Removing least significant precision bits </strong>  <br>
 							We want to achieve this saturation by removing the <em> least significant </em> \( (m_{ip}-m_{op}) \) <em> precision bits </em> from the
@@ -1113,20 +1024,20 @@
 								<strong class="section-heading" style="font-size:1.2em"> Algorithm 5 </strong>
 								<hr>
 
-								<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp\( x_{re}, <1,m_{ip},n_{ip}>, <1,m_{op},n_{ip}> \)
+								<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp;\( x_{re}, &lt; 1,m_{ip},n_{ip} &gt;, &lt; 1,m_{op},n_{ip} &gt; \)
 								<br>
 								<strong class="algorithm-control-statements"> Outputs: </strong> \(x_{re}' \)
 								<br>
 								<br>
-								<strong class="algorithm-control-statements"> if </strong> &nbsp \( x_{re} \geq 0\), &nbsp <strong class="algorithm-control-statements"> then </strong>
+								<strong class="algorithm-control-statements"> if </strong> &nbsp; \( x_{re} \geq 0\), &nbsp; <strong class="algorithm-control-statements"> then </strong>
 								<br>
-								&nbsp &nbsp &nbsp \( x_{temp} = x_{re}*2^{n_{ip}- (m_{ip} - m_{op})} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{ip}} \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{re}' \ \ = x_{keep} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp} = x_{re}*2^{n_{ip}- (m_{ip} - m_{op})} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{ip}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{re}' \ \ = x_{keep} \ ; \) <br>
 								<strong class="algorithm-control-statements"> else </strong> <br>
-								&nbsp &nbsp &nbsp \( x_{temp} = \big( x_{re} + 2^{m_{ip}} \big)*2^{n_{ip}- (m_{ip} - m_{op})} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{ip}} \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{re}' \ \ = x_{keep} - 2^{m_{op}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp} = \big( x_{re} + 2^{m_{ip}} \big)*2^{n_{ip}- (m_{ip} - m_{op})} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{ip}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{re}' \ \ = x_{keep} - 2^{m_{op}} \ ; \) <br>
 								<strong class="algorithm-control-statements"> end </strong> <br>
 								<br>
 								<hr>
@@ -1135,18 +1046,18 @@
 				</ul>
 				<br>
 				<a href=#fixed-point-heading > Back to Top </a>
-				</p>
 
-				<p>
+
+
 					<h3 class="internal-heading"> Truncation </h3>
 					<strong>Truncation</strong> is a rounding technique, which is used to approximate a more precise value (more precision bits) using a less precise value (less precision bits).
 					Suppose we want to add/multiply two \( 8 \) bit numbers, and the output also needs to be represented using \( 8 \) bits but	the full-precision result will require more than \( 8 \) bits.
 					In this case, the full-precision result is truncated to \( 8 \) bits by removing some least-significant precision bits.
 					<br>
 					<br>
-					Suppose the bit-representation \( X_{hw} \) is mapped to the real-value \( x_{re} \) using a fixed-point format \( <1,m_{ip},n_{ip}> \).
+					Suppose the bit-representation \( X_{hw} \) is mapped to the real-value \( x_{re} \) using a fixed-point format \( &lt; 1,m_{ip},n_{ip} &gt; \).
 					Due to some hardware constraints, we need to represent \( x_{re} \) using lesser number of bits than \( (1+m_{ip}+n_{ip}) \).
-					To reduce the error, we truncate \( x_{re} \) to a new-value \( x_{re}' \), with the fixed-point format \( <1,m_{ip},n_{op} > \), where \( n_{ip} > n_{op}\).
+					To reduce the error, we truncate \( x_{re} \) to a new-value \( x_{re}' \), with the fixed-point format \( &lt; 1,m_{ip},n_{op} &gt; \), where \( n_{ip} > n_{op}\).
 
 					<ul class="list-circle">
 						<li> <strong class="section-heading"> Removing least significant precision bits </strong>  <br>
@@ -1159,63 +1070,55 @@
 								<strong class="section-heading" style="font-size:1.2em"> Algorithm 6 </strong>
 								<hr>
 
-								<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp\( x_{re}, <1,m_{ip},n_{ip}>, <1,m_{ip},n_{op}> \)
+								<strong class="algorithm-control-statements"> Inputs: </strong> &nbsp;\( x_{re}, &lt; 1,m_{ip},n_{ip} &gt;, &lt; 1,m_{ip},n_{op} &gt; \)
 								<br>
 								<strong class="algorithm-control-statements"> Outputs: </strong> \(x_{re}' \)
 								<br>
 								<br>
-								<strong class="algorithm-control-statements"> if </strong> &nbsp \( x_{re} \geq 0\), &nbsp <strong class="algorithm-control-statements"> then </strong>
+								<strong class="algorithm-control-statements"> if </strong> &nbsp; \( x_{re} \geq 0\), &nbsp; <strong class="algorithm-control-statements"> then </strong>
 								<br>
-								&nbsp &nbsp &nbsp \( x_{temp} = x_{re}*2^{n_{op}} \ ;\) <br>
-								&nbsp &nbsp &nbsp \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{op}} \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{re}' \ \ = x_{keep} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp} = x_{re}*2^{n_{op}} \ ;\) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{op}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{re}' \ \ = x_{keep} \ ; \) <br>
 								<strong class="algorithm-control-statements"> else </strong> <br>
-								&nbsp &nbsp &nbsp \( x_{temp} = \big( x_{re} + 2^{m_{ip}} \big)*2^{n_{op}} \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{op}} \ ; \) <br>
-								&nbsp &nbsp &nbsp \( x_{re}' \ \ = x_{keep} - 2^{m_{op}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{temp} = \big( x_{re} + 2^{m_{ip}} \big)*2^{n_{op}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{keep} = \big( \left \lfloor x_{temp} \right \rfloor \big) *2^{-n_{op}} \ ; \) <br>
+								&nbsp; &nbsp; &nbsp; \( x_{re}' \ \ = x_{keep} - 2^{m_{op}} \ ; \) <br>
 								<strong class="algorithm-control-statements"> end </strong> <br>
 								<br>
 								<hr>
 							</div> <!-- algorithms -->
 						</li>
-						<br>
+						</ul>
 						<a href=#fixed-point-heading > Back to Top </a>
-					<ul>
-					<br>
-				</p>
+  					<br>
 			</div> <!-- section6 -->
 
-
-			<div class="sections">
-	    	<p id="references">
+			<div class="sections" id="references">
 	      <h2 class="section-heading"> References </h2>
-
 				<ol class="ordered-list">
 					<li>
 						<cite><a id="reference1" target="_blank" href="https://web.ist.utl.pt/luis.tarrataca/classes/computer_architecture/Chapter10-ComputerArithemtic.pdf">Chapter 10 - Computer Arithmetic </a> by Luis Tarrataca</cite>
 					</li>
+
 					<li>
 						<cite><a id="reference2" target="_blank" href="https://courses.cs.washington.edu/courses/cse467/08au/labs/l5/fp.pdf">Fixed-Point Arithmetic: An Introduction </a> by Randy Yates</cite>
 					</li>
+
 					<li>
 						<cite><a id="reference3" target="_blank" href="https://www3.ntu.edu.sg/home/ehchua/programming/java/datarepresentation.html"> Data Representation - Integers, Floating-Point Numbers & Character Sets </a> </cite>
 					</li>
 				</ol> <!-- ordered-list -->
 				<a href=#fixed-point-heading > Back to Top </a>
-        </p>
 			</div> <!--References -->
 
 			<div id="about-me">
-				<p>
 				I am Chirag Gupta, an engineer working in Silicon Labs, Hyderabad, India. I did my Bachelors degree in <em>Electronics Engineering</em> from <strong>IIT (BHU)</strong>, Varanasi, India and my Masters degree in <em>Communications and Signal Processing</em> from <strong>IIT</strong>, Madras, India.
 				Before joining Redpine Signals (now acquired by Silicon Labs), I had worked for about an year in Qualcomm, Hyderabad, India.
 				Apart from academics, I am interested in fine-arts, calisthenics, travelling, reading non-fictional books.
 				<br>
-
-				</p>
 			</div>  <!-- about-me -->
 		</div> <!-- content-div -->
-	</div> <!-- main-div -->
 
 </body>
 </html>
